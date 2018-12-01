@@ -1,12 +1,12 @@
-package xyz.markpost.SpringBootTrainInformation;
+package xyz.markpost.traininformation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringBootTrainInformationApplication {
+public class TrainInformationApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootTrainInformationApplication.class, args);
+		SpringApplication.run(TrainInformationApplication.class, args);
 	}
 }
