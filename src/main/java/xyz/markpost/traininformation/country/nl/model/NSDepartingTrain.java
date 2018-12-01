@@ -1,4 +1,4 @@
-package xyz.markpost.traininformation.carrier.ns.model;
+package xyz.markpost.traininformation.country.nl.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

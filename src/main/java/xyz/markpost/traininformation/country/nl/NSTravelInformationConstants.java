@@ -1,4 +1,4 @@
-package xyz.markpost.traininformation.carrier.ns;
+package xyz.markpost.traininformation.country.nl;
 
 class NSTravelInformationConstants {
 
