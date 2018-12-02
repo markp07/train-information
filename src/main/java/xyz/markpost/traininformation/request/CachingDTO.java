@@ -1,7 +1,7 @@
 package xyz.markpost.traininformation.request;
 
-import java.util.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * TODO: comment

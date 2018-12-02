@@ -15,6 +15,8 @@ public class RequestDTO {
 
   private String password;
 
+  private long maxAge = 5 * 60 * 1000;
+
   /**
    * TODO: comment
    * @param url
@@ -69,5 +71,13 @@ public class RequestDTO {
    */
   public String getPassword() {
     return password;
+  }
+
+  public long getMaxAge() {
+    return maxAge;
+  }
+
+  public void setMaxAge(long maxAge) {
+    this.maxAge = maxAge;
   }
 }

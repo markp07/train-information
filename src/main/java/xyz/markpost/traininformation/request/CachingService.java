@@ -1,19 +1,16 @@
 package xyz.markpost.traininformation.request;
 
-import com.google.common.hash.Hashing;
-import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * TODO: Method freeSpace(int numberOfSpace): frees spaces up according to cleaning policy
  * TODO: refactor
  * TODO: JavaDoc
  * TODO: JUnit
@@ -41,7 +38,8 @@ public class CachingService {
     } else {
       ResponseDTO response = requestService.doRequest(request);
       String hash = generateHash(request);
-      CachingDTO cachingDTO = new CachingDTO(hash, request, response, 5*60*1000);
+      long maxAge = request.getMaxAge();
+      CachingDTO cachingDTO = new CachingDTO(hash, request, response, maxAge);
       addToCache(cachingDTO);
       return response;
     }
@@ -57,7 +55,6 @@ public class CachingService {
 
     if(cache.containsKey(hash)){
       CachingDTO cachingDTO = cache.get(hash);
-      //TODO: simplify
       return processedUrlEquals(request, cachingDTO.getRequestDTO()) && !cachingDTO.hasReachedMaxAge();
     } else {
       return false;
@@ -96,7 +93,7 @@ public class CachingService {
    */
   private void addToCache(CachingDTO cachingDTO) {
     if(MAX_NUMBER_CACHED_ITEMS >= cache.size()){
-      cleanItemFromCache(1);
+      cleanItemFromCache();
     }
     cache.put(cachingDTO.getHash(), cachingDTO);
   }
@@ -130,16 +127,27 @@ public class CachingService {
    * @param numberOfItems
    */
   private void cleanItemsFromCacheAccordingToPolicy(int numberOfItems) {
-    //TODO
+    for(int i = 0; i < numberOfItems; i++){
+      String leastRecentlyUsedHash = "";
+      Date date = new Date();
+      Timestamp leastRecentlyUsedTimestamp = new Timestamp(date.getTime());
+      for (Entry<String, CachingDTO> cachedItem : cache.entrySet()){
+        CachingDTO cachingDTO = cachedItem.getValue();
+        if (leastRecentlyUsedTimestamp.after(cachingDTO.getLastUsage())) {
+          leastRecentlyUsedHash = cachingDTO.getHash();
+          leastRecentlyUsedTimestamp = cachingDTO.getLastUsage();
+        }
+      }
+      cache.remove(leastRecentlyUsedHash);
+    }
   }
 
   /**
    *
-   * @param itemToClean
    */
-  private void cleanItemFromCache(int itemToClean) {
+  private void cleanItemFromCache() {
     int cleanedUpItems = cleanCache();
-    int remainingItemsToClean = itemToClean - cleanedUpItems;
+    int remainingItemsToClean = 1 - cleanedUpItems;
 
     if(0 < remainingItemsToClean) {
       cleanItemsFromCacheAccordingToPolicy(remainingItemsToClean);
