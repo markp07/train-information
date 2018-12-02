@@ -71,6 +71,7 @@ public class CachingDTO {
   public boolean hasReachedMaxAge(){
     Date date = new Date();
     Timestamp currentTime = new Timestamp(date.getTime());
-    return currentTime.after(initialUsage);
+    long age = currentTime.getTime() - initialUsage.getTime();
+    return maxAge <= age;
   }
 }
