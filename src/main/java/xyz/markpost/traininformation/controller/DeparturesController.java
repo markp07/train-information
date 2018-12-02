@@ -31,7 +31,7 @@ public class DeparturesController {
    * @param station
    * @return
    */
-  @GetMapping(value = "/api/departures")
+  @GetMapping("/api/departures")
   public Response getDepartures(String station){
     List<NSDepartingTrain> data = nsTravelInformation.getDepartureTimes(station);
     return new Response(200, data);
@@ -42,10 +42,19 @@ public class DeparturesController {
    * @param station
    * @return
    */
-  @GetMapping(value = "/api/delays")
+  @GetMapping("/api/delays")
   public Response getDelays(String station){
     List<NSDepartingTrain> data = nsTravelInformation.getDelays(station);
     return new Response(200, data);
+  }
+
+  @GetMapping("/api/disruptions")
+  public Response getActualDisruptions(String station) {
+    return new Response(404, null);
+  }
+  @GetMapping("/api/construction")
+  public Response getPlannedConstruction(String station) {
+    return new Response(404, null);
   }
 
 }

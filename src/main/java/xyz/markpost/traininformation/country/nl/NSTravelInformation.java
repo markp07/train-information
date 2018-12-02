@@ -81,4 +81,22 @@ public class NSTravelInformation {
     return delayedDepartingTrains;
   }
 
+  /**
+   *
+   * @param station
+   * @return
+   */
+  public List<Object> getActualDisruptions(String station) {
+    return new ArrayList<>();
+  }
+
+  /**
+   *
+   * @param station
+   * @return
+   */
+  public List<Object> getPlannedConstruction(String station) {
+    return new ArrayList<>();
+  }
+
 }
