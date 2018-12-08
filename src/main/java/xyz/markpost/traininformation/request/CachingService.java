@@ -55,7 +55,9 @@ public class CachingService {
 
     if(cache.containsKey(hash)){
       CachingDTO cachingDTO = cache.get(hash);
-      return processedUrlEquals(request, cachingDTO.getRequestDTO()) && !cachingDTO.hasReachedMaxAge();
+      boolean correctUrl = processedUrlEquals(request, cachingDTO.getRequestDTO());
+      boolean notReachedMaxAge = !cachingDTO.hasReachedMaxAge();
+      return correctUrl && notReachedMaxAge;
     } else {
       return false;
     }
