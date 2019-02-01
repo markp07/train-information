@@ -3,6 +3,7 @@ package xyz.markpost.traininformation.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.markpost.traininformation.country.nl.NSTravelInformation;
 import xyz.markpost.traininformation.country.nl.model.NSDepartingTrain;
@@ -23,6 +24,7 @@ import xyz.markpost.traininformation.model.Response;
  * TODO: Research adding other countries
  */
 @RestController
+@RequestMapping(path = "/v1")
 public class DeparturesController {
 
   @Autowired
@@ -33,7 +35,7 @@ public class DeparturesController {
    * @param station
    * @return
    */
-  @GetMapping("/api/departures")
+  @GetMapping("/departures")
   public Response getDepartures(String station){
     List<NSDepartingTrain> data = nsTravelInformation.getDepartureTimes(station);
     return new Response(200, data);
@@ -44,19 +46,19 @@ public class DeparturesController {
    * @param station
    * @return
    */
-  @GetMapping("/api/delays")
+  @GetMapping("/delays")
   public Response getDelays(String station){
     List<NSDepartingTrain> data = nsTravelInformation.getDelays(station);
     return new Response(200, data);
   }
 
-  @GetMapping("/api/disruptions")
+  @GetMapping("/disruptions")
   public Response getActualDisruptions(String station) {
     List<NSDisruption> data = nsTravelInformation.getActualDisruptions(station);
     return new Response(200, data);
   }
 
-  @GetMapping("/api/construction")
+  @GetMapping("/construction")
   public Response getPlannedConstruction(String station) {
     List<NSDisruption> data = nsTravelInformation.getPlannedConstruction(station);
     return new Response(200, data);
