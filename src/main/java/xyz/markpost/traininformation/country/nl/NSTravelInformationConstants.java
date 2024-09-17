@@ -14,8 +14,8 @@ class NSTravelInformationConstants {
 
   static final String UNPLANNED_PARAM = "unplanned";
 
-  static final String API_USERNAME = "mark@markpost.xyz";
+  static final String API_USERNAME = "";
 
-  static final String API_PASSWORD = "YbeqhqMRWMooQCHQtk0eiUMn0QzyMcAB6KHfB6lVZkYW5fs9_xe6vw";
+  static final String API_PASSWORD = "";
 
 }
